@@ -45,6 +45,12 @@ fileprivate class ViewModel {
 fileprivate class TaskCancelBag<ID: Hashable> {
     
     private var bag: [ID: AnyCancellable] = [:]
+
+    init() { }
+    
+    deinit {
+        bag.values.forEach { $0.cancel() }
+    }
     
     public func cancel(id: ID) {
         bag[id]?.cancel()
